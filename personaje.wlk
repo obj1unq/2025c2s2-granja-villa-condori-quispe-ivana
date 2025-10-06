@@ -9,11 +9,12 @@ object personaje {
 	var ganancias = 0
 
 	method haySemillaEn(posicion) {
-	  //return cultivosSembrados.any({...})
+	  return game.getObjectsIn(posicion).size() == 0
 	}
 	method enPosicionHay(posicion) {
-	  
+	  return game.getObjectsIn(posicion)
 	}
+	
 	method sembrar(semilla) {
 	  self.validarSiHaySemillaAqui()
       
@@ -22,9 +23,12 @@ object personaje {
 	}
 
 	method validarSiHaySemillaAqui() {
-	  const posicion = 
-	  if(self.position())
-	}
+	  if(self.haySemillaEn(self.position())){
+		self.error("Ya hay Semilla")
+	  }
+	}cambios
+
+
 
 }
 object configurarElMundo {
