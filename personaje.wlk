@@ -9,7 +9,8 @@ object personaje {
 	var ganancias = 0
 
 	method haySemillaEn(posicion) {
-	  return game.getObjectsIn(posicion).size() == 0
+	  return game.getObjectsIn(posicion).size() <= 2
+	  // game.hasVisual(posicion) Booleasno
 	}
 	method enPosicionHay(posicion) {
 	  return game.getObjectsIn(posicion)
@@ -26,7 +27,11 @@ object personaje {
 	  if(self.haySemillaEn(self.position())){
 		self.error("Ya hay Semilla")
 	  }
-	}cambios
+	}
+
+	method regar() {
+	  
+	}
 
 
 

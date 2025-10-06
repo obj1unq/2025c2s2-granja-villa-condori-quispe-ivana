@@ -10,8 +10,12 @@ program farmville {
 	game.ground("ground.png")
 
 	//  VISUALES
+
+ configurarElMundo.mDeSembrarMaiz()
+ configurarElMundo.oDeSembrarTomaco()
+ configurarElMundo.tDeSembrarTrigo()
  	game.addVisualCharacter(personaje)
- 	game.addVisual(new Maiz()) // Se agrega a modo de prueba
+ 	//game.addVisual(new Maiz()) // Se agrega a modo de prueba
  	
  	//  COMIENZA
 	game.start()
