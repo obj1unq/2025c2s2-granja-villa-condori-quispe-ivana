@@ -1,3 +1,4 @@
+import cultivos.*
 import wollok.game.*
 
 object personaje {
@@ -13,27 +14,28 @@ object personaje {
 	method enPosicionHay(posicion) {
 	  
 	}
-	method sembrar() {
+	method sembrar(semilla) {
 	  self.validarSiHaySemillaAqui()
-
-	game	
-	  
-	  
+      
+	  game.addVisual(semilla)
+	  cultivosSembrados.add(semilla)
 	}
 
 	method validarSiHaySemillaAqui() {
-	  
+	  const posicion = 
+	  if(self.position())
 	}
 
 }
 object configurarElMundo {
   method mDeSembrarMaiz(){
-	keyboard.m().onPressDo({personaje.sembrar()})
+	//const maiz = new Maiz()
+	keyboard.m().onPressDo({personaje.sembrar(new Maiz(position = personaje.position()))})
   }
   method tDeSembrarTrigo() {
-	keyboard.t().onPressDo({personaje.sembrar()})
+	keyboard.t().onPressDo({personaje.sembrar(new Trigo(position = personaje.position()))})
   }
   method oDeSembrarTomaco() {
-	keyboard.o().onPressDo({personaje.sembrar()})
+	keyboard.o().onPressDo({personaje.sembrar(new Tomaco(position = personaje.position()))})
   }
 } 
