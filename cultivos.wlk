@@ -34,15 +34,15 @@ object adult {
   }
 }
 class Trigo {
-  var estado = 1
+  var nivel = 1 //NIVEL
   var property position = game.at(2, 4)
 
-  method cambiarEstado(_estado) {
+  method aumentarNivel(_estado) {
 	  estado = _estado
 	}
-
+//diferenciaR LO DE REGAR CON EL NIVEL
 	method regar() {
-	  return if(estado == 0) 1 else if(estado == 1) 2 else if(estado == 2) 3 else 4
+	  //return if(estado == 0) 1 else if(estado == 1) 2 else if(estado == 2) 3 else 4
 	}//game.height() - 1
 
   method image() {
@@ -54,7 +54,7 @@ class Tomaco {
   var property position = game.at(0, 0)
 
 	method regar() {
-	  if(position.y() == 9){
+	  if(position.y() == game.height()){
 		position = game.at(position.x(), 0)
 	  } else {
 		position = game.at(position.x(), position.y() + 1)

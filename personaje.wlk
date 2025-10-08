@@ -39,6 +39,9 @@ object personaje {
 	  cultivo.regar()
       console.println(cultivo)
 	}
+	method cosechar() {
+	  
+	}
 
 
 
@@ -56,5 +59,8 @@ object configurarElMundo {
   }
   method rDeRegar() {
 	keyboard.r().onPressDo({personaje.regarA()})
+  }
+  method cDeCosechar() {
+	keyboard.c().onPressDo({personaje.cosechar()})
   }
 } 
