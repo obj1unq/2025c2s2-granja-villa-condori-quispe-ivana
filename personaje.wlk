@@ -9,7 +9,7 @@ object personaje {
 	var ganancias = 0
 
 	method haySemillaEn(posicion) {
-	  return game.getObjectsIn(posicion).size() <= 2
+	  return game.getObjectsIn(posicion).size() == 2
 	  // game.hasVisual(posicion) Booleasno
 	}
 	method enPosicionHay(posicion) {
@@ -17,10 +17,13 @@ object personaje {
 	}
 	
 	method sembrar(semilla) {
-	  self.validarSiHaySemillaAqui()
+		//const visual = game.hasVisual(semilla)
+	  //self.validarSiHaySemillaAqui()
       
 	  game.addVisual(semilla)
 	  cultivosSembrados.add(semilla)
+
+	  console.println(position)
 	}
 
 	method validarSiHaySemillaAqui() {
@@ -29,8 +32,12 @@ object personaje {
 	  }
 	}
 
-	method regar() {
-	  
+	method regarA() {
+	  const cultivo = game.getObjectsIn(self.position()).last()
+	  //self.validarSiHaySemillaAqui()
+
+	  cultivo.regar()
+      console.println(cultivo)
 	}
 
 
@@ -46,5 +53,8 @@ object configurarElMundo {
   }
   method oDeSembrarTomaco() {
 	keyboard.o().onPressDo({personaje.sembrar(new Tomaco(position = personaje.position()))})
+  }
+  method rDeRegar() {
+	keyboard.r().onPressDo({personaje.regarA()})
   }
 } 

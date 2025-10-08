@@ -1,35 +1,67 @@
 import wollok.game.*
 import personaje.*
 class Maiz {
-	//var estado = bebe 
+	var estado = bebe 
 	var property position = game.at(1, 1)
-	/*method position() {
-		// TODO: hacer que aparezca donde lo plante Hector
-		return game.at(1, 1)
-	}*/
-	method image() {
-		return "corn_baby.png"//"corn_" + estado.nombreEstado() + ".png"
-	}/*
-	method estado() {
-	  if(sembrar){
 
-	  }
-	}*/
+	method cambiarEstado(_estado) {
+	  estado = _estado
+	}
+	method regar() {
+	  estado.crecer(self)
+	}
+	method image() {
+		return "corn_" + estado.nombreEstado() + ".png"
+	}
 }
 object bebe {
   method nombreEstado() {
 	return "baby"
   }
-}
-class Trigo {
-  var property position = game.at(2, 4)
-  method image() {
-	return "wheat_.png"
+  method crecer(maiz) {
+	maiz.cambiarEstado(adult)
+	game.say(maiz, "CRECIO")
   }
 }
 
-class Tomaco {
+object adult {
+  method nombreEstado() {
+	return "adult"
+  }
+  method decrecer(maiz) {
+	maiz.cambiarEstado(bebe)
+	game.say(maiz, "CRECIO")
+  }
+}
+class Trigo {
+  var estado = 1
   var property position = game.at(2, 4)
+
+  method cambiarEstado(_estado) {
+	  estado = _estado
+	}
+
+	method regar() {
+	  return if(estado == 0) 1 else if(estado == 1) 2 else if(estado == 2) 3 else 4
+	}//game.height() - 1
+
+  method image() {
+	return "wheat_" + self.regar() + ".png"
+  }
+} //modificar
+
+class Tomaco {
+  var property position = game.at(0, 0)
+
+	method regar() {
+	  if(position.y() == 9){
+		position = game.at(position.x(), 0)
+	  } else {
+		position = game.at(position.x(), position.y() + 1)
+	  }
+	  console.println(position)
+	}
+
   method image() {
 	return "tomaco.png"
   }
