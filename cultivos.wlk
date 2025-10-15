@@ -4,6 +4,12 @@ class Maiz {
 	var estado = bebe 
 	var property position = game.at(1, 1)
 
+	//var esAdulto = false
+
+	method esAdulto(){
+		estado.esAdulto()
+	}
+//quiero hacer un metodo que diga es adulto, sin usar variable, entonces para ello se lo delego a cada estado
 	method cambiarEstado(_estado) {
 	  estado = _estado
 	}
@@ -15,41 +21,107 @@ class Maiz {
 	}
 }
 object bebe {
-  method nombreEstado() {
-	return "baby"
-  }
-  method crecer(maiz) {
-	maiz.cambiarEstado(adult)
-	game.say(maiz, "CRECIO")
-  }
+	method nombreEstado() {
+		return "baby"
+	}
+	method crecer(maiz) {
+		maiz.cambiarEstado(adult)
+		game.say(maiz, "CRECIO")
+	}
+	method esAdulto() { 
+    	return false 
+    }
 }
 
 object adult {
-  method nombreEstado() {
-	return "adult"
-  }
-  method decrecer(maiz) {
-	maiz.cambiarEstado(bebe)
-	game.say(maiz, "CRECIO")
-  }
+	method nombreEstado() {
+		return "adult"
+	}
+	method decrecer(maiz) {
+		maiz.cambiarEstado(bebe)
+		game.say(maiz, "CRECIO")
+	}
+	method esAdulto() { 
+    	return true 
+    }
 }
 class Trigo {
-  var estado = 1
+  var nivel = nivelCero
   var property position = game.at(2, 4)
 
-  method cambiarEstado(_estado) {
-	  estado = _estado
+	method cambiarNivel(_nivel) {
+		nivel = _nivel
+		}
+	method regar() {
+	  nivel.evolucionar(self)
 	}
+	//pregunar bien si puedo mejorarlo
 
+
+	method image() {
+		return "wheat_" + nivel.nivel() + ".png"
+	}
+	method esAdulto(){
+		nivel.esAdulto()
+	}
+} 
+//para el trigo, vamos a volverlo como el maiz, luego buscar una solucion mas feliz
+//donde no sea necesario crear objetos ya que solo son numeros y puedo tratarlos de niveles
+/*
 	method regar() {
 	  return if(estado == 0) 1 else if(estado == 1) 2 else if(estado == 2) 3 else 4
 	}//game.height() - 1
 
-  method image() {
-	return "wheat_" + self.regar() + ".png"
-  }
-} //modificar
+*/
+object nivelUno {
+	method nivel() {
+	  return "1"
+	}
+	method evolucionar(trigo) {
+		trigo.cambiarNivel(nivelDos)
+		game.say(trigo, "CRECIO")
+	}
+	method esAdulto() { 
+    	return false 
+    }
+}
+object nivelDos {
+  method nivel() {
+	  return "2"
+	}
+	method evolucionar(trigo) {
+		trigo.cambiarNivel(nivelTres)
+		game.say(trigo, "CRECIO")
+	}
+	method esAdulto() { 
+    	return true 
+    }
+}
+object nivelTres {
+    method nivel() {
+	  return "3"
+	}
+	method evolucionar(trigo) {
+		trigo.cambiarNivel(nivelCero)
+		game.say(trigo, "Retrocedio!")
+	}
+	method esAdulto() { 
+    	return true 
+    }
+}
 
+object nivelCero {
+    method nivel() {
+	  return "0"
+	}
+	method evolucionar(trigo) {
+		trigo.cambiarNivel(nivelUno)
+		game.say(trigo, "Crecio!")
+	}
+	method esAdulto() { 
+    	return false 
+    }
+}
 class Tomaco {
   var property position = game.at(0, 0)
 
@@ -59,11 +131,12 @@ class Tomaco {
 	  } else {
 		position = game.at(position.x(), position.y() + 1)
 	  }
-	  console.println(position)
+	  console.println(position)// despues borrar
 	}
 
   method image() {
 	return "tomaco.png"
   }
 }
-
+/*https://xtext.wollok.org/documentacion/wollokdoc/
+https://www.wollok.org/documentation/language/#wollok.game*/

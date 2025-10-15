@@ -11,11 +11,12 @@ program farmville {
 
 	//  VISUALES
 
- configurarElMundo.mDeSembrarMaiz()
- configurarElMundo.oDeSembrarTomaco()
- configurarElMundo.tDeSembrarTrigo()
+	configurarElMundo.mDeSembrarMaiz()
+	configurarElMundo.oDeSembrarTomaco()
+	configurarElMundo.tDeSembrarTrigo()
+	configurarElMundo.cDeCosechar()
 
- configurarElMundo.rDeRegar()
+	configurarElMundo.rDeRegar()
  	game.addVisualCharacter(personaje)
  	//game.addVisual(new Maiz()) // Se agrega a modo de prueba
  	

@@ -17,13 +17,14 @@ object personaje {
 	}
 	
 	method sembrar(semilla) {
-		//const visual = game.hasVisual(semilla)
-	  //self.validarSiHaySemillaAqui()
+
+	  self.validarSiHaySemillaAqui()
       
 	  game.addVisual(semilla)
 	  cultivosSembrados.add(semilla)
 
-	  console.println(position)
+	  console.println(position) // despues borrar
+	  //console.println(image().semilla)
 	}
 
 	method validarSiHaySemillaAqui() {
@@ -33,14 +34,29 @@ object personaje {
 	}
 
 	method regarA() {
-	  const cultivo = game.getObjectsIn(self.position()).last()
-	  //self.validarSiHaySemillaAqui()
+	  const cultivo = game.getObjectsIn(self.position()).last() //porque utilizo el 
+	  
 
 	  cultivo.regar()
       console.println(cultivo)
 	}
 
+	method cosechar() {
+	  // solo las plantas adultas sino exepcion
+	  self.validarSiSemillaEsAdulta()
+	  conso
+	}
 
+	method validarSiSemillaEsAdulta() {
+	  if(not self.semillaEsAdultaEn(position)){
+			self.error("No tengo para cosechar!")
+			//preguntar el porque estos self error se pueden ver en el game sin ser SAy
+	  }
+	}
+	method semillaEsAdultaEn(posicion) {
+	  const cultivo = game.getObjectsIn(posicion).last() //con last me traigo el cultivo
+	  return cultivo.esAdulto()
+	}
 
 }
 object configurarElMundo {
@@ -56,5 +72,8 @@ object configurarElMundo {
   }
   method rDeRegar() {
 	keyboard.r().onPressDo({personaje.regarA()})
+  }
+  method cDeCosechar() {
+	keyboard.c().onPressDo({personaje.cosechar()})
   }
 } 
