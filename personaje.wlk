@@ -5,7 +5,7 @@ object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
 	const cultivosSembrados = []
-	const cosasCosechadas = []
+	const cultivosCosechados = []
 	var ganancias = 0
 
 	method haySemillaEn(posicion) {
@@ -24,7 +24,7 @@ object personaje {
 	  cultivosSembrados.add(semilla)
 
 	  console.println(position) // despues borrar
-	  //console.println(image().semilla)
+	  console.println(cultivosSembrados)
 	}
 
 	method validarSiHaySemillaAqui() {
@@ -41,21 +41,47 @@ object personaje {
       console.println(cultivo)
 	}
 
-	method cosechar() {
+	method cosechar() { // arreglar cosas que no funcionan
 	  // solo las plantas adultas sino exepcion
 	  self.validarSiSemillaEsAdulta()
-	  conso
+	  
+	  const cultivo = cultivosSembrados.find({cultivo => cultivo.position() == position})
+	  
+	  cultivosCosechados.add(cultivo)
+	  cultivosSembrados.remove(cultivo)
+	  game.removeVisual(cultivo)
+      
+
+	  // preimero buscamos al cultivo = find obtener el cultivo de la position
+	  //any = 
+	  //console.println(cultivo)
+	  //ver en la consola
+	  console.println(cultivosCosechados)
+	  console.println(cultivosSembrados)
 	}
 
 	method validarSiSemillaEsAdulta() {
 	  if(not self.semillaEsAdultaEn(position)){
 			self.error("No tengo para cosechar!")
+			//game.say(visual, message)
 			//preguntar el porque estos self error se pueden ver en el game sin ser SAy
 	  }
 	}
 	method semillaEsAdultaEn(posicion) {
-	  const cultivo = game.getObjectsIn(posicion).last() //con last me traigo el cultivo
+	  const cultivo = cultivosSembrados.find({cultivo => cultivo.position() == position}) //con last me traigo el cultivo
 	  return cultivo.esAdulto()
+	  console.println(cultivo)
+	}//copyWithout(elementToRemove)
+	method vender() {
+	  const gananciaTotal = cultivosCosechados.sum({cultivo => cultivo.precio()})
+      const cantidadDeCultivos = cultivosCosechados.size()
+	  keyboard.backspace().onPressDo({self.verCuantoHayParaVender(gananciaTotal, cantidadDeCultivos)})
+
+	  //ver 
+	  console.println(gananciaTotal)
+	}
+	method verCuantoHayParaVender(ganancia, cantCultivos) {
+	  
 	}
 
 }
@@ -75,5 +101,8 @@ object configurarElMundo {
   }
   method cDeCosechar() {
 	keyboard.c().onPressDo({personaje.cosechar()})
+  }
+  method vDeVender() {
+	keyboard.v().onPressDo({personaje.vender()})
   }
 } 

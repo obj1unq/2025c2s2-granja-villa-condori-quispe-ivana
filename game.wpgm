@@ -15,6 +15,7 @@ program farmville {
 	configurarElMundo.oDeSembrarTomaco()
 	configurarElMundo.tDeSembrarTrigo()
 	configurarElMundo.cDeCosechar()
+	configurarElMundo.vDeVender()
 
 	configurarElMundo.rDeRegar()
  	game.addVisualCharacter(personaje)

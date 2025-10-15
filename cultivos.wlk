@@ -3,6 +3,7 @@ import personaje.*
 class Maiz {
 	var estado = bebe 
 	var property position = game.at(1, 1)
+	const property costo = 150 //monedas x maiz
 
 	//var esAdulto = false
 
@@ -18,6 +19,9 @@ class Maiz {
 	}
 	method image() {
 		return "corn_" + estado.nombreEstado() + ".png"
+	}
+	method esMaiz() {
+	  return true
 	}
 }
 object bebe {
@@ -49,11 +53,14 @@ class Trigo {
   var nivel = nivelCero
   var property position = game.at(2, 4)
 
+	method precio() {
+	  return nivel.precio() 
+	}
 	method cambiarNivel(_nivel) {
 		nivel = _nivel
 		}
 	method regar() {
-	  nivel.evolucionar(self)
+	  nivel.evolucionar(self) //agregar un printl en rgar 
 	}
 	//pregunar bien si puedo mejorarlo
 
@@ -84,6 +91,9 @@ object nivelUno {
 	method esAdulto() { 
     	return false 
     }
+	method precio() {
+	  return 0
+	}
 }
 object nivelDos {
   method nivel() {
@@ -96,6 +106,9 @@ object nivelDos {
 	method esAdulto() { 
     	return true 
     }
+	method precio() {
+	  return 100
+	}
 }
 object nivelTres {
     method nivel() {
@@ -108,6 +121,9 @@ object nivelTres {
 	method esAdulto() { 
     	return true 
     }
+	method precio() {
+	  return 200
+	}
 }
 
 object nivelCero {
@@ -121,10 +137,16 @@ object nivelCero {
 	method esAdulto() { 
     	return false 
     }
+	method precio() {
+	  return 0 //esto no es deuda? -100 |(etapa - 1) * 100
+	}
 }
 class Tomaco {
   var property position = game.at(0, 0)
-
+    
+	method precio() {
+	  return 80
+	}
 	method regar() {
 	  if(position.y() == 9){
 		position = game.at(position.x(), 0)
@@ -134,9 +156,12 @@ class Tomaco {
 	  console.println(position)// despues borrar
 	}
 
-  method image() {
-	return "tomaco.png"
-  }
+	method image() {
+		return "tomaco.png"
+	}
+	method esAdulto() { 
+    	return true 
+    }
 }
 /*https://xtext.wollok.org/documentacion/wollokdoc/
 https://www.wollok.org/documentation/language/#wollok.game*/
