@@ -17,7 +17,14 @@ program farmville {
 	configurarElMundo.cDeCosechar()
 	configurarElMundo.vDeVender()
     configurarElMundo.rDeRegar()
+	configurarElMundo.aDeColocarAspersores()
     configurarElMundo.spacioParaDescribirGananciaYCantidadDeCultivos()
+	
+	game.onTick(1000, "abrirAspersores", {personaje.regarAspersores()})
+
+	//SACAR EL TICK CON S
+	keyboard.s().onPressDo({game.removeTickEvent("abrirAspersores")})
+
 	
  	game.addVisualCharacter(personaje)
  	//game.addVisual(new Maiz()) // Se agrega a modo de prueba

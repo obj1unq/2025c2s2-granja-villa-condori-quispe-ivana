@@ -1,21 +1,25 @@
+import aspersores.*
 import cultivos.*
 import wollok.game.*
 
 object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
-	const cultivosSembrados = []
+	const property cultivosSembrados = []
 	const cultivosCosechados = []
+	const aspersoresColocados = []
 	var gananciaTotal = 0
 	//var cantidadDeCultivosAVender = 0 no deberia ser una variable sino un metodo
 
+	//se puede mejorar simplemente llamando a la lista de sembrados y pregunar si hay una semilla con esa posicion => recordar plantearlo
 	method haySemillaEn(posicion) {
-	  return game.getObjectsIn(posicion).size() == 2
+	  return game.getObjectsIn(posicion).size() == 2  
 	  // game.hasVisual(posicion) Booleasno
 	}
-	method enPosicionHay(posicion) {
+
+	/*method enPosicionHay(posicion) {
 	  return game.getObjectsIn(posicion)
-	}
+	}*/
 	
 	method sembrar(semilla) {
 
@@ -104,29 +108,65 @@ object personaje {
 
 	}   
 
+    //	COLOCAR LOS ASPERSORES
+	method colocarAspersor(aspersor) {
+	  self.validarSiHayAlgoAqui()
 
+	  game.addVisual(aspersor)
+
+	  aspersoresColocados.add(aspersor)
+	  console.println(aspersoresColocados)
+	}
+//console.println("entro al else validacion")
+    method validarSiHayAlgoAqui() {
+		//const cosas = cultivosSembrados ++ aspersoresColocados
+		//const position
+	  if(self.hayAlgoAqui(position)){
+		  self.error("YA HAY ALGO AQUI!")
+          //game.say(self, "YA HAY ALGO AQUI!")
+	  }
+
+	}
+	method hayAlgoAqui(posicion) {
+	  return game.getObjectsIn(posicion).size() == 2
+	}
+
+	//ARMAR EL METODO PARA QUE LOS ASPERSORES RIEGUEN
+	method regarAspersores() {
+	  aspersoresColocados.forEach({aspersor => aspersor.regarAreaLimitrofe()}) 
+	}
 }
 object configurarElMundo {
-  method mDeSembrarMaiz(){
-	//const maiz = new Maiz()
-	keyboard.m().onPressDo({personaje.sembrar(new Maiz(position = personaje.position()))})
-  }
-  method tDeSembrarTrigo() {
-	keyboard.t().onPressDo({personaje.sembrar(new Trigo(position = personaje.position()))})
-  }
-  method oDeSembrarTomaco() {
-	keyboard.o().onPressDo({personaje.sembrar(new Tomaco(position = personaje.position()))})
-  }
-  method rDeRegar() {
-	keyboard.r().onPressDo({personaje.regarA()})
-  }
-  method cDeCosechar() {
-	keyboard.c().onPressDo({personaje.cosechar()})
-  }
-  method vDeVender() {
-	keyboard.v().onPressDo({personaje.vender()})
-  }
-  method spacioParaDescribirGananciaYCantidadDeCultivos() {
-	keyboard.space().onPressDo({personaje.verCuantoHayParaVender()})
-  }
+
+	method mDeSembrarMaiz(){
+		//const maiz = new Maiz()
+		keyboard.m().onPressDo({personaje.sembrar(new Maiz(position = personaje.position()))})
+	}
+	method tDeSembrarTrigo() {
+		keyboard.t().onPressDo({personaje.sembrar(new Trigo(position = personaje.position()))})
+	}
+	method oDeSembrarTomaco() {
+		keyboard.o().onPressDo({personaje.sembrar(new Tomaco(position = personaje.position()))})
+	}
+	method rDeRegar() {
+		keyboard.r().onPressDo({personaje.regarA()})
+	}
+	method cDeCosechar() {
+		keyboard.c().onPressDo({personaje.cosechar()})
+	}
+	method vDeVender() {
+		keyboard.v().onPressDo({personaje.vender()})
+	}
+	method spacioParaDescribirGananciaYCantidadDeCultivos() {
+		keyboard.space().onPressDo({personaje.verCuantoHayParaVender()})
+	}
+	method aDeColocarAspersores() {
+		keyboard.a().onPressDo({personaje.colocarAspersor(new Aspersor(position = personaje.position()))})
+	}
 } 
+/*
+method hayAlgoAqui(posicion) {
+    const objetos = game.getObjectsIn(posicion)
+    return objetos.any({ o => o != self }) // hay algo distinto al personaje
+}
+*/
