@@ -6,7 +6,8 @@ object personaje {
 	const property image = "fplayer.png"
 	const cultivosSembrados = []
 	const cultivosCosechados = []
-	var ganancias = 0
+	var gananciaTotal = 0
+	//var cantidadDeCultivosAVender = 0 no deberia ser una variable sino un metodo
 
 	method haySemillaEn(posicion) {
 	  return game.getObjectsIn(posicion).size() == 2
@@ -34,7 +35,7 @@ object personaje {
 	}
 
 	method regarA() {
-	  const cultivo = game.getObjectsIn(self.position()).last() //porque utilizo el 
+	  const cultivo = cultivosSembrados.find({cultivo => cultivo.position() == position}) // en mis cultivos busco aquel que esta en la misma posicion que el granjero 
 	  
 
 	  cultivo.regar()
@@ -63,26 +64,46 @@ object personaje {
 	method validarSiSemillaEsAdulta() {
 	  if(not self.semillaEsAdultaEn(position)){
 			self.error("No tengo para cosechar!")
-			//game.say(visual, message)
+			//game.say(self, "No tengo para cosechar!")
 			//preguntar el porque estos self error se pueden ver en el game sin ser SAy
 	  }
 	}
 	method semillaEsAdultaEn(posicion) {
-	  const cultivo = cultivosSembrados.find({cultivo => cultivo.position() == position}) //con last me traigo el cultivo
+	  const cultivo = cultivosSembrados.find({cultivo => cultivo.position() == position}) 
 	  return cultivo.esAdulto()
 	  console.println(cultivo)
 	}//copyWithout(elementToRemove)
-	method vender() {
-	  const gananciaTotal = cultivosCosechados.sum({cultivo => cultivo.precio()})
-      const cantidadDeCultivos = cultivosCosechados.size()
-	  keyboard.backspace().onPressDo({self.verCuantoHayParaVender(gananciaTotal, cantidadDeCultivos)})
 
+	// VENTA
+	method vender() {
+	  
+	  if(cultivosCosechados.isEmpty()){
+		game.say(self, "No tengo nada para vender!")
+		
+	  } else {
+			const cantidadDeCultivosVendidos = cultivosCosechados.size()
+			const gananciaDeVentaActual = cultivosCosechados.sum({cultivo => cultivo.precio()})
+			gananciaTotal += gananciaDeVentaActual
+			
+			cultivosCosechados.clear()
+			game.say(self, "Vendi " + gananciaDeVentaActual + " de " + cantidadDeCultivosVendidos + " cultivos!")
+	    }"Gane " + gananciaTotal 
+	  
+	  
+	  
 	  //ver 
 	  console.println(gananciaTotal)
 	}
-	method verCuantoHayParaVender(ganancia, cantCultivos) {
-	  
+
+	method cantidadDeCultivosAVender() {
+	  return cultivosCosechados.size() // antes lo tenia como cultivosSembrados.size() pq 
 	}
+	method verCuantoHayParaVender() {
+		
+	  game.say(self, "Gane " + gananciaTotal + " pesos en total y " + self.cantidadDeCultivosAVender() + " cultivos para vender!" )
+
+	}   
+
 
 }
 object configurarElMundo {
@@ -104,5 +125,8 @@ object configurarElMundo {
   }
   method vDeVender() {
 	keyboard.v().onPressDo({personaje.vender()})
+  }
+  method spacioParaDescribirGananciaYCantidadDeCultivos() {
+	keyboard.space().onPressDo({personaje.verCuantoHayParaVender()})
   }
 } 

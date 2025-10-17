@@ -16,8 +16,9 @@ program farmville {
 	configurarElMundo.tDeSembrarTrigo()
 	configurarElMundo.cDeCosechar()
 	configurarElMundo.vDeVender()
-
-	configurarElMundo.rDeRegar()
+    configurarElMundo.rDeRegar()
+    configurarElMundo.spacioParaDescribirGananciaYCantidadDeCultivos()
+	
  	game.addVisualCharacter(personaje)
  	//game.addVisual(new Maiz()) // Se agrega a modo de prueba
  	

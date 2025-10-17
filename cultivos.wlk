@@ -3,12 +3,12 @@ import personaje.*
 class Maiz {
 	var estado = bebe 
 	var property position = game.at(1, 1)
-	const property costo = 150 //monedas x maiz
+	const property precio = 150 //monedas x maiz
 
 	//var esAdulto = false
 
 	method esAdulto(){
-		estado.esAdulto()
+		return estado.esAdulto()
 	}
 //quiero hacer un metodo que diga es adulto, sin usar variable, entonces para ello se lo delego a cada estado
 	method cambiarEstado(_estado) {
@@ -69,7 +69,7 @@ class Trigo {
 		return "wheat_" + nivel.nivel() + ".png"
 	}
 	method esAdulto(){
-		nivel.esAdulto()
+		return nivel.esAdulto()
 	}
 } 
 //para el trigo, vamos a volverlo como el maiz, luego buscar una solucion mas feliz
