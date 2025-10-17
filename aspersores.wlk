@@ -17,7 +17,7 @@ class Aspersor {
 
         if(cultivosActivos.isEmpty()){
             self.error("No Hay ninguna planta para regar en el area limitrofe a 1")
-        }
+        } //Si no hay nada no riega
         //personaje.cultivosSembrados()
 
         self.vereificarSiHayAlgunCultivoLimitrofe()
@@ -27,7 +27,7 @@ class Aspersor {
 
     }
 
-    method vereificarSiHayAlgunCultivoLimitrofe() {
+    method vereificarSiHayAlgunCultivoLimitrofe() {//como funciono sin cultivosActivos va, despues recordar implementarlo para ver si sigue funcionandp
       if(not personaje.cultivosSembrados().any({cultivo => 
                                                     (((self.position().x() + 1) == cultivo.position().x() && self.position().y() == cultivo.position().y()) // right Oeste
                                                 ||  (self.position().x() - 1).max(0) == cultivo.position().x() && self.position().y() == cultivo.position().y()  // left Este
@@ -40,7 +40,7 @@ class Aspersor {
 
     }
     method regarDeFormaOrtogonal() {
-      //right, left, up y down
+      //right, left, up y down  FUNCIONAAAAAAAAAAAAAAAA!
 
       const listaDeCultivosLimitrofes = personaje.cultivosSembrados().filter({cultivo => 
                                                     ((self.position().x() + 1) == cultivo.position().x() && self.position().y() == cultivo.position().y()) // right Oeste
@@ -64,7 +64,11 @@ Ej => dadas (a,b) (x,y) => a - x = 1 (3-2)
     }
 
     method regarEnDiagonal() {
-      console.println("llaom")
+      const listaDeCultivosLimitrofes = personaje.cultivosSembrados().filter({cultivo => 
+                                                    ((self.position().x() + 1) == cultivo.position().x() && (self.position().y() + 1) == cultivo.position().y()) // right Oeste ahora sera Norte - Oeste
+                                                ||  (self.position().x() - 1).max(0) == cultivo.position().x() && (self.position().y() - 1).max(0) == cultivo.position().y()  // left Este ah ahora Sur Este ¿puede ser sur -Oeste? Verificar
+                                                ||   (self.position().x() + 1) == cultivo.position().x() && (self.position().y() - 1).max(0) == cultivo.position().y() // down Sur
+                                                ||   (self.position().x() - 1).max(0) == cultivo.position().x() && (self.position().y() + 1) == cultivo.position().y()})
     }
     /*
         METODOLOGIA:
