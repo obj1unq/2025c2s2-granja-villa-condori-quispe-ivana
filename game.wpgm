@@ -23,9 +23,9 @@ program farmville {
 	game.onTick(1000, "abrirAspersores", {personaje.regarAspersores()})
 
 	//SACAR EL TICK CON S
-	keyboard.s().onPressDo({game.removeTickEvent("abrirAspersores")})
+	//keyboard.s().onPressDo({game.removeTickEvent("abrirAspersores")})
 
-	
+
  	game.addVisualCharacter(personaje)
  	//game.addVisual(new Maiz()) // Se agrega a modo de prueba
  	

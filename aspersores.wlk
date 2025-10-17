@@ -1,5 +1,7 @@
 import personaje.*
 import cultivos.*
+import wollok.game.*
+
 
 
 class Aspersor {
@@ -9,7 +11,14 @@ class Aspersor {
     }  
 
     method regarAreaLimitrofe() {
-        personaje.cultivosSembrados()
+
+        // PRIMERO VEMOS QUE LOS CULTIVOS A REGAR TODAVIA EXISTAN
+        const cultivosActivos = personaje.cultivosSembrados().filter({ cultivo => game.hasVisual(cultivo)})
+
+        if(cultivosActivos.isEmpty()){
+            self.error("No Hay ninguna planta para regar en el area limitrofe a 1")
+        }
+        //personaje.cultivosSembrados()
 
         self.vereificarSiHayAlgunCultivoLimitrofe()
         
@@ -17,6 +26,7 @@ class Aspersor {
         self.regarEnDiagonal()
 
     }
+
     method vereificarSiHayAlgunCultivoLimitrofe() {
       if(not personaje.cultivosSembrados().any({cultivo => 
                                                     (((self.position().x() + 1) == cultivo.position().x() && self.position().y() == cultivo.position().y()) // right Oeste
@@ -52,6 +62,7 @@ Ej => dadas (a,b) (x,y) => a - x = 1 (3-2)
     method regar(unCultivo) {
       unCultivo.regar()
     }
+
     method regarEnDiagonal() {
       console.println("llaom")
     }

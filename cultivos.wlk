@@ -41,9 +41,8 @@ object adult {
 	method nombreEstado() {
 		return "adult"
 	}
-	method decrecer(maiz) {
-		maiz.cambiarEstado(bebe)
-		game.say(maiz, "CRECIO")
+	method crecer(maiz) {
+		game.say(self,"Ya Crecio")
 	}
 	method esAdulto() { 
     	return true 
