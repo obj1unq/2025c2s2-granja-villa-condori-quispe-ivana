@@ -146,13 +146,44 @@ class Tomaco {
 	method precio() {
 	  return 80
 	}
-	method regar() {
+
+	method regar() { //como solo funciona en una vez deberia hacerlo recursivamente hasta encontrar vacio
+	   //primero obtenemos la nueva posicion donde se va a regar
+	   const nuevaPosition = if(position.y() == 9){
+									game.at(position.x(), 0)
+								} else {
+									game.at(position.x(), position.y() + 1)
+								} // obtengo la nueva posicion dependiendo del testeo 
+		
+	    if(game.getObjectsIn(nuevaPosition).any({obj => obj != self})){
+
+			position = self.sumarUnoMas(nuevaPosition)
+			console.println("Entro al if" + nuevaPosition)
+			self.error("Ya hay alguien ahi, entonces me voy uno mas")
+			
+		} else {
+			position = nuevaPosition
+			console.println("Entro al else" + nuevaPosition)
+		  }//vemos que en la nueva posicion no haya nada 
+		
+
+      /*
 	  if(position.y() == 9){
 		position = game.at(position.x(), 0)
 	  } else {
 		position = game.at(position.x(), position.y() + 1)
-	  }
-	  console.println(position)// despues borrar
+	  } //esto sube sin importar si ya hay una semilla por eso modificar 
+	  */
+	  
+	}
+	method sumarUnoMas(posicion) {
+		return if(position.y() == 9){
+			 game.at(posicion.x(), 1)
+
+			} else {
+				game.at(posicion.x(), posicion.y() + 1)
+			}
+	  
 	}
 
 	method image() {
@@ -161,6 +192,13 @@ class Tomaco {
 	method esAdulto() { 
     	return true 
     }
+
+	/*//Para evitar que si sube en uno no haya otra planta en ella
+	method validarSiNoHayNadaAqui() {
+	  if(game.getObjectsIn(position).any({obj => obj != personaje})){
+			self.error("Ya hay algo aqui")
+	  }
+	}*/
 }
 /*https://xtext.wollok.org/documentacion/wollokdoc/
 https://www.wollok.org/documentation/language/#wollok.game*/

@@ -1,6 +1,7 @@
 import wollok.game.*
 import personaje.*
 import cultivos.*
+import mercado.* //SIEMPRE ACORDARSE DE IMPORTAR LOS ARCHIVOS NECESARIOS
 
 program farmville {
 	//  CONFIG	
@@ -20,6 +21,10 @@ program farmville {
 	configurarElMundo.aDeColocarAspersores()
     configurarElMundo.spacioParaDescribirGananciaYCantidadDeCultivos()
 	
+	//COLOCANDO MERCADOS
+	game.addVisual(new Mercado(position = game.at(9, 9), cantidadDeMonedas = 500))
+
+	//ABRIR ASPERSORES
 	game.onTick(1000, "abrirAspersores", {personaje.regarAspersores()})
 
 	//SACAR EL TICK CON S

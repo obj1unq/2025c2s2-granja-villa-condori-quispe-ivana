@@ -1,6 +1,7 @@
 import aspersores.*
 import cultivos.*
 import wollok.game.*
+import mercado.*
 
 object personaje {
 	var property position = game.center()
@@ -9,6 +10,7 @@ object personaje {
 	const cultivosCosechados = []
 	const aspersoresColocados = []
 	var gananciaTotal = 0
+	
 	//var cantidadDeCultivosAVender = 0 no deberia ser una variable sino un metodo
 
 	//se puede mejorar simplemente llamando a la lista de sembrados y pregunar si hay una semilla con esa posicion => recordar plantearlo
@@ -28,8 +30,8 @@ object personaje {
 	  game.addVisual(semilla)
 	  cultivosSembrados.add(semilla)
 
-	  console.println(position) // despues borrar
-	  console.println(cultivosSembrados)
+	  //console.println(position) // despues borrar
+	  //console.println(cultivosSembrados)
 	}
 
 	method validarSiHaySemillaAqui() {
@@ -61,7 +63,7 @@ object personaje {
 	  //any = 
 	  //console.println(cultivo)
 	  //ver en la consola
-	  console.println(cultivosCosechados)
+	  //console.println(cultivosCosechados)
 	  console.println(cultivosSembrados)
 	}
 
@@ -96,7 +98,7 @@ object personaje {
 	  
 	  
 	  //ver 
-	  console.println(gananciaTotal)
+	  //console.println(gananciaTotal)
 	}
 
 	method cantidadDeCultivosAVender() {
@@ -115,7 +117,7 @@ object personaje {
 	  game.addVisual(aspersor)
 
 	  aspersoresColocados.add(aspersor)
-	  console.println(aspersoresColocados)
+	  //console.println(aspersoresColocados)
 	}
 //console.println("entro al else validacion")
     method validarSiHayAlgoAqui() {
