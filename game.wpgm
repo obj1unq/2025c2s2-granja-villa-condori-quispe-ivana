@@ -22,7 +22,10 @@ program farmville {
     configurarElMundo.spacioParaDescribirGananciaYCantidadDeCultivos()
 	
 	//COLOCANDO MERCADOS
-	game.addVisual(new Mercado(position = game.at(9, 9), cantidadDeMonedas = 500))
+	
+	sistemaDeMercados.fundarMercados()
+	sistemaDeMercados.ubicarMercados()
+
 
 	//ABRIR ASPERSORES
 	game.onTick(1000, "abrirAspersores", {personaje.regarAspersores()})

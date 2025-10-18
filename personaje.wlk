@@ -77,12 +77,16 @@ object personaje {
 	method semillaEsAdultaEn(posicion) {
 	  const cultivo = cultivosSembrados.find({cultivo => cultivo.position() == position}) 
 	  return cultivo.esAdulto()
-	  console.println(cultivo)
+
 	}//copyWithout(elementToRemove)
 
 	// VENTA
 	method vender() {
-	  
+
+	//VENTA EN MERCADOS
+
+	  self.validarQueEstaEnUnMercado()
+
 	  if(cultivosCosechados.isEmpty()){
 		game.say(self, "No tengo nada para vender!")
 		
@@ -94,13 +98,11 @@ object personaje {
 			cultivosCosechados.clear()
 			game.say(self, "Vendi " + gananciaDeVentaActual + " de " + cantidadDeCultivosVendidos + " cultivos!")
 	    }"Gane " + gananciaTotal 
-	  
-	  
-	  
-	  //ver 
-	  //console.println(gananciaTotal)
 	}
 
+method validarQueEstaEnUnMercado() {
+  if()
+}
 	method cantidadDeCultivosAVender() {
 	  return cultivosCosechados.size() // antes lo tenia como cultivosSembrados.size() pq 
 	}
