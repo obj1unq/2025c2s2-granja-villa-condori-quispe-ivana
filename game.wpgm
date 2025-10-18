@@ -30,9 +30,9 @@ program farmville {
 	//ABRIR ASPERSORES
 	game.onTick(1000, "abrirAspersores", {personaje.regarAspersores()})
 
-	//SACAR EL TICK CON S
+	//Config para probar si cosas funcionan
 	//keyboard.s().onPressDo({game.removeTickEvent("abrirAspersores")})
-
+    keyboard.s().onPressDo({sistemaDeMercados.losMercadosAnuncianQueVenden()})
 
  	game.addVisualCharacter(personaje)
  	//game.addVisual(new Maiz()) // Se agrega a modo de prueba

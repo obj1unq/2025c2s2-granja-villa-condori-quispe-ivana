@@ -23,6 +23,8 @@ object personaje {
 	  return game.getObjectsIn(posicion)
 	}*/
 	
+//SEMBRAR SEMILLA
+
 	method sembrar(semilla) {
 
 	  self.validarSiHaySemillaAqui()
@@ -40,6 +42,8 @@ object personaje {
 	  }
 	}
 
+//REGAR SEMILLA
+
 	method regarA() {
 	  const cultivo = cultivosSembrados.find({cultivo => cultivo.position() == position}) // en mis cultivos busco aquel que esta en la misma posicion que el granjero 
 	  
@@ -48,7 +52,9 @@ object personaje {
       console.println(cultivo)
 	}
 
-	method cosechar() { // arreglar cosas que no funcionan
+//COSECHAR PLANTA
+
+	method cosechar() { 
 	  // solo las plantas adultas sino exepcion
 	  self.validarSiSemillaEsAdulta()
 	  
@@ -59,12 +65,10 @@ object personaje {
 	  game.removeVisual(cultivo)
       
 
-	  // preimero buscamos al cultivo = find obtener el cultivo de la position
-	  //any = 
-	  //console.println(cultivo)
-	  //ver en la consola
+	  // primero buscamos al cultivo = find obtener el cultivo de la position
+
 	  //console.println(cultivosCosechados)
-	  console.println(cultivosSembrados)
+
 	}
 
 	method validarSiSemillaEsAdulta() {
@@ -80,29 +84,53 @@ object personaje {
 
 	}//copyWithout(elementToRemove)
 
-	// VENTA
+// VENTA DE PLANTAS
+
 	method vender() {
 
 	//VENTA EN MERCADOS
 
 	  self.validarQueEstaEnUnMercado()
-
+	  
 	  if(cultivosCosechados.isEmpty()){
 		game.say(self, "No tengo nada para vender!")
 		
 	  } else {
 			const cantidadDeCultivosVendidos = cultivosCosechados.size()
 			const gananciaDeVentaActual = cultivosCosechados.sum({cultivo => cultivo.precio()})
-			gananciaTotal += gananciaDeVentaActual
 			
-			cultivosCosechados.clear()
-			game.say(self, "Vendi " + gananciaDeVentaActual + " de " + cantidadDeCultivosVendidos + " cultivos!")
-	    }"Gane " + gananciaTotal 
+			//ENCONTRAR EL MERCADO
+			const mercadoActual = sistemaDeMercados.mercadosFundados().find({mercado => self.position() == mercado.position()})
+			
+			if(mercadoActual.saldo() >= gananciaDeVentaActual){
+				
+				gananciaTotal += gananciaDeVentaActual
+
+				mercadoActual.mercaderiaParaVender().addAll(cultivosCosechados)
+				mercadoActual.saldo(mercadoActual.saldo() - gananciaDeVentaActual)
+				
+				cultivosCosechados.clear()
+				game.say(self, "Vendi " + gananciaDeVentaActual + " de " + cantidadDeCultivosVendidos + " cultivos!")
+			    
+				
+			}
+			
+	    }//"Gane " + gananciaTotal 
 	}
 
-method validarQueEstaEnUnMercado() {
-  if()
-}
+	method validarQueEstaEnUnMercado() {
+
+		if(not self.hayMercadoAqui()){
+
+			self.error("No fuiste al Mercado! MAL!")
+		}
+	//const mercados = sistemaDeMercados.mercadosFundados().find({mercado => mercado.position() == position})
+	// obtuve le mercado 
+
+	}
+	method hayMercadoAqui() {
+	  return sistemaDeMercados.mercadosFundados().any({mercado => self.position() == mercado.position()})
+	}
 	method cantidadDeCultivosAVender() {
 	  return cultivosCosechados.size() // antes lo tenia como cultivosSembrados.size() pq 
 	}
