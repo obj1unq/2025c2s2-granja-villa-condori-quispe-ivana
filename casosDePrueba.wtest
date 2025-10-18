@@ -2,14 +2,23 @@ import personaje.*
 import cultivos.*
 import aspersores.*
 import mercado.*
+import wollok.game.*
+
 
 // las ordenes que tienen los ONTICK y ONPRESSDO, NO se pueden testear => simulemos
 describe "Siendo un granjero en GRANJA VILLA" {
+    
+    //EN ESTA SECCION DECLARO "OBJETOS" que usare en todos los tests
+
+    const trigo = new Trigo(position = personaje.position())
+    const maiz = new Maiz(position = personaje.position())
+    // 
+  
+    // el metodo initialize hace que todos los test inicien con todo lo que esta en el metodo
   test "sembrar semillas en la misma posicion que el personaje, en caso que ya haya una semilla no sembrar" {
 
     //CASO POSITIVO
-    const trigo = new Trigo(position = personaje.position())
-    const maiz = new Maiz(position = personaje.position())
+
 
     assert.equals([], personaje.cultivosSembrados())
 
@@ -25,10 +34,24 @@ describe "Siendo un granjero en GRANJA VILLA" {
 
     assert.that(personaje.cultivosSembrados().size() == 2)
     
-
   }
   test "Regar semillas " {
+
+    personaje.position()
+    const tomaco = new Tomaco(position = game.at(4, 3))
+
+    assert.equals([], personaje.cultivosSembrados())
+    personaje.sembrar(trigo)
+    personaje.sembrar(maiz)
+
+    //preguntar porque trigo y maiz si funcionan bien pero cuando quiero agregar tomaco me tira error en ya hay semilla
     
+    personaje.sembrar(tomaco) // asique cambie la position del personaje
+
+    personaje.regarA()
+
+
+
   }
 }
 
