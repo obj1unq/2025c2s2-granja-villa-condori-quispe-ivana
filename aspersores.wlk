@@ -59,16 +59,19 @@ Ej => dadas (a,b) (x,y) => a - x = 1 (3-2)
                                                                             
       console.println(listaDeCultivosLimitrofes)
     }
+
     method regar(unCultivo) {
       unCultivo.regar()
     }
 
-    method regarEnDiagonal() {
-      const listaDeCultivosLimitrofes = personaje.cultivosSembrados().filter({cultivo => 
+    method regarEnDiagonal() { //FUNCIONAAAAAAAAAA!
+      const listaDeCultivosLimitrofesEnDiagonal = personaje.cultivosSembrados().filter({cultivo => 
                                                     ((self.position().x() + 1) == cultivo.position().x() && (self.position().y() + 1) == cultivo.position().y()) // right Oeste ahora sera Norte - Oeste
                                                 ||  (self.position().x() - 1).max(0) == cultivo.position().x() && (self.position().y() - 1).max(0) == cultivo.position().y()  // left Este ah ahora Sur Este ¿puede ser sur -Oeste? Verificar
                                                 ||   (self.position().x() + 1) == cultivo.position().x() && (self.position().y() - 1).max(0) == cultivo.position().y() // down Sur
                                                 ||   (self.position().x() - 1).max(0) == cultivo.position().x() && (self.position().y() + 1) == cultivo.position().y()})
+
+        listaDeCultivosLimitrofesEnDiagonal.forEach({cultivo => self.regar(cultivo)})
     }
     /*
         METODOLOGIA:
