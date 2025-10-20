@@ -1,6 +1,7 @@
 import wollok.game.*
 import personaje.*
 import cultivos.*
+import mercado.* //SIEMPRE ACORDARSE DE IMPORTAR LOS ARCHIVOS NECESARIOS
 
 program farmville {
 	//  CONFIG	
@@ -10,8 +11,31 @@ program farmville {
 	game.ground("ground.png")
 
 	//  VISUALES
+
+	configurarElMundo.mDeSembrarMaiz()
+	configurarElMundo.oDeSembrarTomaco()
+	configurarElMundo.tDeSembrarTrigo()
+	configurarElMundo.cDeCosechar()
+	configurarElMundo.vDeVender()
+    configurarElMundo.rDeRegar()
+	configurarElMundo.aDeColocarAspersores()
+    configurarElMundo.spacioParaDescribirGananciaYCantidadDeCultivos()
+	
+	//COLOCANDO MERCADOS
+	
+	sistemaDeMercados.fundarMercados()
+	sistemaDeMercados.ubicarMercados()
+
+
+	//ABRIR ASPERSORES
+	game.onTick(1000, "abrirAspersores", {personaje.regarAspersores()})
+
+	//Config para probar si cosas funcionan
+	//keyboard.s().onPressDo({game.removeTickEvent("abrirAspersores")})
+    keyboard.s().onPressDo({sistemaDeMercados.losMercadosAnuncianQueVenden()})
+
  	game.addVisualCharacter(personaje)
- 	game.addVisual(new Maiz()) // Se agrega a modo de prueba
+ 	//game.addVisual(new Maiz()) // Se agrega a modo de prueba
  	
  	//  COMIENZA
 	game.start()

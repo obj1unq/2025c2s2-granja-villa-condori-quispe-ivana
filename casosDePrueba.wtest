@@ -1,0 +1,226 @@
+import personaje.*
+import cultivos.*
+import aspersores.*
+import mercado.*
+import wollok.game.*
+
+
+// las ordenes que tienen los ONTICK y ONPRESSDO, NO se pueden testear => simulemos
+describe "Siendo un granjero en GRANJA VILLA" {
+    
+    //EN ESTA SECCION DECLARO "OBJETOS" que usare en todos los tests
+
+    //const trigo = new Trigo(position = personaje.position())
+    //const maiz = new Maiz(position = personaje.position())
+    //const tomaco = new Tomaco(position = personaje.position()) 
+  
+    // el metodo initialize hace que todos los test inicien con todo lo que esta en el metodo
+  method initialize(){
+    
+  }
+  test "sembrar semillas en la misma posicion que el personaje, en caso que ya haya una semilla no sembrar" {
+
+    const trigo = new Trigo(position = personaje.position())
+    const maiz = new Maiz(position = personaje.position())
+    //CASO POSITIVO
+
+
+    assert.equals([], personaje.cultivosSembrados())
+
+    personaje.sembrar(trigo)
+    personaje.sembrar(maiz)
+
+    assert.equals([trigo, maiz], personaje.cultivosSembrados())
+
+    //CASO NEGATIVO
+
+    assert.throwsException({ personaje.sembrar(trigo) })
+                            //asser.throwsException() => Comprueba si un bloque genera una excepción. En caso contrario, se genera una excepción.
+
+    assert.that(personaje.cultivosSembrados().size() == 2)
+    
+  }
+  test "Regar semillas " {
+
+    //VEMOS QUE NO HAY NADA PLANTADO
+
+    //assert.equals([], personaje.cultivosSembrados())
+    
+    //Plantamos y regamos
+    const maiz = new Maiz(position = personaje.position())
+    //console.println(personaje.position())
+
+    personaje.sembrar(maiz)
+    assert.notThat(maiz.esAdulto())
+
+    personaje.regarA()
+    assert.that(maiz.esAdulto())
+
+    //Actualizamos la posicion y sembramos el trigo
+
+    personaje.position(personaje.position().down(1))
+    const trigo = new Trigo(position = personaje.position())
+    
+    //console.println(personaje.position())
+
+    personaje.sembrar(trigo)
+    assert.notThat(trigo.esAdulto())
+    //console.println("trigo :" + trigo.position())
+    //console.println("trigo N:" + trigo.nivel())
+    personaje.regarA()
+    assert.notThat(trigo.esAdulto())
+    assert.equals(nivelUno, trigo.nivel())
+    
+    //SEMABRAMOS Y REGAMOS TOMACO
+
+    personaje.position(personaje.position().down(1))
+    const tomaco0 = new Tomaco(position = personaje.position())
+    personaje.sembrar(tomaco0)
+    assert.throwsException({ personaje.regarA() })
+
+    personaje.position(personaje.position().up(1)) //arriba
+    personaje.position(personaje.position().left(1)) //oeste
+    const tomaco = new Tomaco(position = personaje.position()) 
+
+    //console.println(personaje.position())
+    personaje.sembrar(tomaco)
+    personaje.regarA()
+    assert.that(tomaco.esAdulto())
+    //assert.equals(tomaco.position().up(1), tomaco.position()) preguntar si no hay otra forma
+  }
+  test "Cosechando plantas" {
+    //Plantamos como no es adulto hay exepcion, por eso se riega y se cosecha
+    const maiz = new Maiz(position = personaje.position())
+
+    personaje.sembrar(maiz)
+    assert.notThat(maiz.esAdulto())
+    assert.throwsException({personaje.cosechar()})
+    assert.equals([maiz], personaje.cultivosSembrados())
+    assert.equals([], personaje.cultivosCosechados())
+
+    personaje.regarA()
+    assert.that(maiz.esAdulto())
+    personaje.cosechar()
+    assert.equals([maiz], personaje.cultivosCosechados())
+    assert.equals([], personaje.cultivosSembrados())
+
+    //ahora con el trigo
+    personaje.position(personaje.position().down(1))
+    const trigo = new Trigo(position = personaje.position())
+
+    personaje.sembrar(trigo)
+    assert.notThat(trigo.esAdulto())
+
+    assert.throwsException({ personaje.cosechar() })
+    personaje.regarA()
+    assert.notThat(trigo.esAdulto())
+    assert.equals(nivelUno, trigo.nivel())   
+    
+    assert.throwsException({ personaje.cosechar() })
+    personaje.regarA()
+    assert.that(trigo.esAdulto())
+    personaje.cosechar()
+    assert.equals([maiz,trigo], personaje.cultivosCosechados()) 
+
+    //AHORA CON EL TOMACO
+    personaje.position(personaje.position().down(1))
+    const tomaco = new Tomaco(position = personaje.position())
+    
+    personaje.sembrar(tomaco)
+    assert.that(tomaco.esAdulto())
+    personaje.cosechar()
+    assert.equals([maiz,trigo,tomaco], personaje.cultivosCosechados()) 
+  }
+  test "Vendiendo Plantas, vemos lo que pasa cuando no esta en la tienda y cuando si esta" {
+    const maiz = new Maiz(position = personaje.position())
+
+    personaje.sembrar(maiz)
+    personaje.regarA()
+    assert.that(maiz.esAdulto())
+    personaje.cosechar()
+    assert.equals([maiz], personaje.cultivosCosechados())
+
+    //plantamos y cosechamos el trigo
+    personaje.position(personaje.position().down(1))
+    const trigo = new Trigo(position = personaje.position())
+
+    personaje.sembrar(trigo)
+    personaje.regarA()
+    assert.notThat(trigo.esAdulto())
+    personaje.regarA()
+    assert.that(trigo.esAdulto())
+    personaje.cosechar()
+
+    //AHORA CON EL TOMACO
+    personaje.position(personaje.position().down(1))
+    const tomaco = new Tomaco(position = personaje.position())
+    
+    personaje.sembrar(tomaco)
+
+    personaje.cosechar()
+    assert.equals([maiz,trigo,tomaco], personaje.cultivosCosechados()) 
+
+    //una vez hecho eso vamos a vender y NO ESTA EN LA TIENDA
+    assert.throwsException({ personaje.vender() })
+
+    //VAMOS A LA TIENDA
+
+    assert.equals(0, personaje.gananciaTotal())
+
+    sistemaDeMercados.fundarMercados()
+    
+    personaje.position(sistemaDeMercados.mercadosFundados().first().position())
+    personaje.vender()
+
+    assert.equals(330, personaje.gananciaTotal()) //debo arreglalo, ya que como el mercado es aleatorio a veces funciona y a veces no , encontrar una solucion sin quitar nada
+  }
+  test "Verificando los Aspersores" {
+    // Colocamos UN ASPERSOR
+    const aspersor = new Aspersor(position = personaje.position())
+
+    personaje.colocarAspersor(aspersor)
+    console.println(aspersor.position())
+
+    //Lo rodeamos con tres cultivos hacia Inferior del Aspersor. los 3 en linea
+    personaje.position(personaje.position().up(1))
+    personaje.position(personaje.position().right(1)) //Este real
+    const maiz = new Maiz(position = personaje.position())
+
+    personaje.sembrar(maiz)
+    
+    console.println("maiz : "+maiz.position())
+
+    //plantamos el trigo
+    personaje.position(personaje.position().down(1))
+    const trigo = new Trigo(position = personaje.position())
+
+    personaje.sembrar(trigo)
+
+    console.println("trigo : "+trigo.position())
+    //AHORA CON EL TOMACO
+    personaje.position(personaje.position().down(1))
+    personaje.position(personaje.position().right(1))
+    const tomaco = new Tomaco(position = personaje.position())
+    
+    personaje.sembrar(tomaco)
+    console.println("tomaco : "+tomaco.position())
+
+    assert.equals([maiz,trigo,tomaco], personaje.cultivosSembrados()) 
+
+    aspersor.regarAreaLimitrofe()
+
+    assert.that(maiz.esAdulto())
+
+    assert.notThat(trigo.esAdulto())
+    assert.equals(nivelUno, trigo.nivel())
+    
+    assert.that(tomaco.esAdulto())
+  }
+}
+
+
+/*
+QUE CASOS PUEDO TESTEAR
+   -Sembrar semillas
+   -Regar semillas, controlas su estado
+*/
