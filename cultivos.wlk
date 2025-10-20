@@ -57,7 +57,8 @@ class Trigo {
 	}
 	method cambiarNivel(_nivel) {
 		nivel = _nivel
-		}
+	}
+	method nivel() = nivel //lo agregue pq sino no lo podia ver en el test, preguntar si es una buena practica 
 	method regar() {
 	  nivel.evolucionar(self) //agregar un printl en rgar 
 	}
@@ -158,12 +159,12 @@ class Tomaco {
 	    if(game.getObjectsIn(nuevaPosition).any({obj => obj != self})){
 
 			position = self.sumarUnoMas(nuevaPosition)
-			console.println("Entro al if" + nuevaPosition)
+			//console.println("Entro al if" + nuevaPosition)
 			self.error("Ya hay alguien ahi, entonces me voy uno mas")
 			
 		} else {
 			position = nuevaPosition
-			console.println("Entro al else" + nuevaPosition)
+			//console.println("Entro al else" + nuevaPosition)
 		  }//vemos que en la nueva posicion no haya nada 
 		
 

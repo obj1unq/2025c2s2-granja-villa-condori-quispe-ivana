@@ -7,7 +7,7 @@ object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
 	const property cultivosSembrados = []
-	const cultivosCosechados = []
+	const property cultivosCosechados = []
 	const aspersoresColocados = []
 	var gananciaTotal = 0
 	
@@ -49,7 +49,7 @@ object personaje {
 	  
 
 	  cultivo.regar()
-      console.println(cultivo)
+
 	}
 
 //COSECHAR PLANTA
@@ -117,7 +117,7 @@ object personaje {
 			
 	    }//"Gane " + gananciaTotal 
 	}
-
+	method gananciaTotal() = gananciaTotal //getter solo para el test, tuve que agregarlo a ultimo momento por el test ya que no lo necesitaba en mi codigo original, preguntar si es buena practica 
 	method validarQueEstaEnUnMercado() {
 
 		if(not self.hayMercadoAqui()){
