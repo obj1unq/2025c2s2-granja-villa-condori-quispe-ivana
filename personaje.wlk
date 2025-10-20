@@ -136,7 +136,7 @@ object personaje {
 	}
 	method verCuantoHayParaVender() {
 		
-	  game.say(self, "Gane " + gananciaTotal + " pesos en total y " + self.cantidadDeCultivosAVender() + " cultivos para vender!" )
+	  game.say(self, "Gane " + gananciaTotal + " pesos en total y tengo" + self.cantidadDeCultivosAVender() + " cultivos para vender!" )
 
 	}   
 
